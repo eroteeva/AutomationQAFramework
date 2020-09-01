@@ -51,7 +51,7 @@ public class HomePageLinksTests extends AbstractLoginTests {
         Assert.assertEquals(expectedUrlFacebookLink, getCurrentURL());
 
         FacebookPage facebookPage = new FacebookPage();
-        Assert.assertTrue(facebookPage.getProfilePicture().isDisplayed(), "Company logo is displayed.");
+        Assert.assertTrue(facebookPage.getProfilePicture().isDisplayed(), "Profile picture is displayed.");
 
     }
 
@@ -66,11 +66,12 @@ public class HomePageLinksTests extends AbstractLoginTests {
         homePage.clickArchiveLink();
 
         ArchivePage archivePage = new ArchivePage();
-        List<WebElement> events = archivePage.getAllEvents();
 
         Reporter.log("Scroll down till bottom of the page", true);
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+
+        List<WebElement> events = archivePage.getAllEvents();
 
         Reporter.log("Click on the last event in the list", true);
         if (!events.isEmpty()){

@@ -5,7 +5,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class FacebookPage extends PageObject {
 
-    @FindBy(xpath = "//div[@class='_6tay']//img[@class='_6tay']")
+    @FindBy(xpath = "//a[@aria-label='Profile picture']")
     private WebElement profilePicture;
 
     public FacebookPage() {
