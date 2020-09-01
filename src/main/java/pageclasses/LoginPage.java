@@ -1,9 +1,9 @@
-package tests;
+package pageclasses;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class LoginPage {
+public class LoginPage extends PageObject {
 
     @FindBy(xpath = "//input[@name='username']")
     private WebElement usernameField;
@@ -16,6 +16,10 @@ public class LoginPage {
 
     @FindBy(xpath = "//p[@class='state-muffin-message' and text()='Wrong user or password.']")
     private WebElement wrongCredentialsMessage;
+
+    public LoginPage() {
+        super();
+    }
 
     public WebElement getUsernameField(){
         return usernameField;

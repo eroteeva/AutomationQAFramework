@@ -8,14 +8,16 @@ import org.testng.annotations.BeforeClass;
 
 import java.io.IOException;
 
+import static tests.Driver.*;
+
 public class AbstractLoginTests {
 
     protected TestsConfig testsConfig;
 
+    WebDriver driver;
+
     private String browser;
     private String baseUrl;
-
-    public WebDriver driver;
 
     @BeforeClass(alwaysRun = true)
     public void initializeDriver() throws IOException {
@@ -23,30 +25,16 @@ public class AbstractLoginTests {
         browser = testsConfig.getBrowser();
         baseUrl = testsConfig.getBaseUrl();
 
-        startDriver();
+        startDriver(browser);
     }
 
     @AfterClass
     public void tearDown(){
-        if (driver != null) {
-            driver.quit();
-        }
+        stopDriver();
     }
 
     protected void loadBaseURL(){
-        driver.get(testsConfig.getBaseUrl());
-    }
-
-    private void startDriver() {
-        if ("chrome".equals(browser)) {
-            System.setProperty("webdriver.chrome.driver","D:\\Automation\\Selenium\\chromedriver\\chromedriver.exe");
-            driver = new ChromeDriver();
-        } else if ("firefox".equals(browser)) {
-            System.setProperty("webdriver.gecko.driver","D:\\Automation\\Selenium\\firefoxdriver\\geckodriver.exe");
-            driver = new FirefoxDriver();
-        } else {
-            throw new RuntimeException("Unsupported browser");
-        }
+        getURL(baseUrl);
     }
 
 }

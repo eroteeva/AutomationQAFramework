@@ -6,9 +6,16 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pageclasses.ArchivePage;
+import pageclasses.FacebookPage;
+import pageclasses.HomePage;
+import pageclasses.MusalaPage;
 import tests.*;
 
 import java.util.List;
+
+import static tests.Driver.getCurrentURL;
+import static tests.Driver.getDriver;
 
 public class HomePageLinksTests extends AbstractLoginTests {
 
@@ -23,7 +30,7 @@ public class HomePageLinksTests extends AbstractLoginTests {
         homePage.getFooterLink().click();
 
         String expectedUrl = "http://www.musala.com";
-        Assert.assertEquals(expectedUrl, driver.getCurrentUrl());
+        Assert.assertEquals(expectedUrl, getCurrentURL());
 
         MusalaPage musalaPage = new MusalaPage();
         Assert.assertTrue(musalaPage.getCompanyLogo().isDisplayed(), "Company logo is displayed.");
@@ -33,7 +40,7 @@ public class HomePageLinksTests extends AbstractLoginTests {
         homePage.getFacebookLink().click();
 
         String expectedUrlFacebookLink = "https://www.facebook.com/MUFFINconference/";
-        Assert.assertEquals(expectedUrlFacebookLink, driver.getCurrentUrl());
+        Assert.assertEquals(expectedUrlFacebookLink, getCurrentURL());
 
         FacebookPage facebookPage = new FacebookPage();
         Assert.assertTrue(facebookPage.getProfilePicture().isDisplayed(), "Company logo is displayed.");
@@ -45,18 +52,19 @@ public class HomePageLinksTests extends AbstractLoginTests {
         HomePage homePage = new HomePage();
         homePage.getArchivesLink().click();
 
-        List<WebElement> events = driver.findElements(By.xpath("//div[@class='event-magnifier']"));
+        ArchivePage archivePage = new ArchivePage();
+
+        List<WebElement> events = archivePage.getAllEvents();
 
         //scroll down and click the last event on the list
-        JavascriptExecutor js = (JavascriptExecutor) driver;
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
 
-        String xpath = String.format("(//div[@class='event-magnifier'])[%d]", events.size() - 1);
-        driver.findElement(By.xpath(xpath)).click();
+        archivePage.clickOnEvent(events.size() - 1);
 
         //Print in the console the full event schedule in the following format:
         List<WebElement> lectureElements =
-                driver.findElements(By.xpath("//div[@class='collapse-list']/preceding::li[@class='list-group-item header-timeslot']" +
+                getDriver().findElements(By.xpath("//div[@class='collapse-list']/preceding::li[@class='list-group-item header-timeslot']" +
                         "//span[(not(contains(@class,'timeslot'))) and (not(contains(@class,'icon')))] | //div[@class='speaker-info']"));
 
         for (WebElement element : lectureElements) {

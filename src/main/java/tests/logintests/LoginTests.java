@@ -1,15 +1,13 @@
 package tests.logintests;
 
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import tests.AbstractLoginTests;
 import tests.ExcelUtils;
-import tests.HomePage;
-import tests.LoginPage;
+import pageclasses.HomePage;
+import pageclasses.LoginPage;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,12 +28,12 @@ public class LoginTests extends AbstractLoginTests {
         return ExcelUtils.getCredentialsTestData(dataFile);
     }
 
-    @Test(dataProvider = "Authentication", invocationCount = 3)
+    @Test(dataProvider = "Authentication", invocationCount = 5)
     public void loginWithInvalidCredentials(String sUsername, String sPassword) {
 
         HomePage homePage = new HomePage();
 
-        homePage.getSignInButton().click();
+        homePage.clickSignIn();
 
         LoginPage loginPage = new LoginPage();
         loginPage.getUsernameField().sendKeys(sUsername);
