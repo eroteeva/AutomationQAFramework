@@ -33,7 +33,7 @@ public class HomePage extends PageObject {
         return facebookLink;
     }
 
-    public WebElement getArchivesLink() {
+    public WebElement getArchiveLink() {
         return archiveLink;
     }
 

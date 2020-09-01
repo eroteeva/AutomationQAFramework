@@ -1,10 +1,14 @@
 package tests;
 
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Reporter;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 
 import java.io.IOException;
 
@@ -14,27 +18,39 @@ public class AbstractLoginTests {
 
     protected TestsConfig testsConfig;
 
-    WebDriver driver;
-
-    private String browser;
+    protected String browser;
     private String baseUrl;
 
     @BeforeClass(alwaysRun = true)
-    public void initializeDriver() throws IOException {
+    protected void getConfigurations() throws IOException {
         testsConfig = new TestsConfig();
         browser = testsConfig.getBrowser();
         baseUrl = testsConfig.getBaseUrl();
-
-        startDriver(browser);
     }
 
     @AfterClass
-    public void tearDown(){
+    protected void tearDown() {
         stopDriver();
     }
 
-    protected void loadBaseURL(){
+    @BeforeMethod
+    protected void loadHomePage(){
+        startDriver(browser);
+        maximizeWindow();
+        Reporter.log("Loading home page...", true);
+        loadBaseURL();
+    }
+
+    @AfterMethod
+    protected void closeBrowser(){
+        stopDriver();
+    }
+
+    protected void loadBaseURL() {
         getURL(baseUrl);
     }
+
+
+
 
 }

@@ -5,16 +5,17 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class Driver {
 
-    private static final ThreadLocal<WebDriver> DRIVER = new ThreadLocal<WebDriver>();
+    private static ThreadLocal<WebDriver> DRIVER = new ThreadLocal<WebDriver>();
 
 
     private Driver () throws IOException {
     }
 
-    protected static void startDriver(String browser) {
+    public static void startDriver(String browser) {
 
         WebDriver driver = null;
 
@@ -54,5 +55,10 @@ public class Driver {
 
     public static String getCurrentURL() {
         return getDriver().getCurrentUrl();
+    }
+
+    public static void maximizeWindow(){
+        getDriver().manage().window().maximize();
+        getDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 }

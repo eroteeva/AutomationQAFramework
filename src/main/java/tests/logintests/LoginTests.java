@@ -1,6 +1,7 @@
 package tests.logintests;
 
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -17,12 +18,6 @@ public class LoginTests extends AbstractLoginTests {
 
     String dataFilePath = "D:\\Automation\\Test_Musala\\AutomationQAFramework\\testdata\\Credentials.xlsx";
 
-    @BeforeMethod
-    private void loadHomePage(){
-        Reporter.log("Loading home page...", true);
-        loadBaseURL();
-    }
-
     @DataProvider(name = "Authentication")
     public Object[][] credentials() throws IOException {
 
@@ -32,6 +27,7 @@ public class LoginTests extends AbstractLoginTests {
 
     @Test(dataProvider = "Authentication", invocationCount = 5)
     public void loginWithInvalidCredentials(String sUsername, String sPassword) {
+        Reporter.log("TEST: Login with invalid username and password.", true);
 
         HomePage homePage = new HomePage();
 
