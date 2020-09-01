@@ -14,7 +14,7 @@ import java.io.IOException;
 
 import static tests.Driver.*;
 
-public class AbstractLoginTests {
+public abstract class AbstractLoginTests {
 
     protected TestsConfig testsConfig;
 
