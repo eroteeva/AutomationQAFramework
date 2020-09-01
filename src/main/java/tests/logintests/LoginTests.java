@@ -8,6 +8,7 @@ import tests.AbstractLoginTests;
 import tests.ExcelUtils;
 import pageclasses.HomePage;
 import pageclasses.LoginPage;
+import org.testng.Reporter;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +19,7 @@ public class LoginTests extends AbstractLoginTests {
 
     @BeforeMethod
     private void loadHomePage(){
+        Reporter.log("Loading home page...", true);
         loadBaseURL();
     }
 
@@ -33,12 +35,16 @@ public class LoginTests extends AbstractLoginTests {
 
         HomePage homePage = new HomePage();
 
+        Reporter.log("Click on Sing In Button", true);
         homePage.clickSignIn();
 
         LoginPage loginPage = new LoginPage();
+
+        Reporter.log("Enter username and password", true);
         loginPage.getUsernameField().sendKeys(sUsername);
         loginPage.getPasswordField().sendKeys(sPassword);
 
+        Reporter.log("Click Sign In", true);
         loginPage.getSignInButton().click();
 
         Assert.assertTrue(loginPage.getWrongCredentialsMessageElement().isDisplayed(), "Wrong user or password message is displayed");
